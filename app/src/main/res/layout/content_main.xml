@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.dragoncoil.histogramdataentry.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/displayText"
+                android:layout_gravity="end"
+                android:layout_span="3"
+                android:ems="10"
+                android:text="0"
+                android:textAlignment="textEnd"
+                android:textSize="40sp"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <Button
+                android:id="@+id/sevenButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="7"/>
+
+            <Button
+                android:id="@+id/eightButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="8"/>
+
+            <Button
+                android:id="@+id/nineButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="9"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/fourButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="4"/>
+
+            <Button
+                android:id="@+id/fiveButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="5"/>
+
+            <Button
+                android:id="@+id/sixButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="6"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/oneButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="1"/>
+
+            <Button
+                android:id="@+id/twoButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="2"/>
+
+            <Button
+                android:id="@+id/threeButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="3"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/zeroButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="0"/>
+
+            <Button
+                android:id="@+id/decimalButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="."/>
+
+            <Button
+                android:id="@+id/backspaceButton"
+                android:minHeight="80dp"
+                android:onClick="onButtonClick"
+                android:text="&lt;-"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView/>
+        </TableRow>
+        <TableRow>
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_span="3"
+                android:minHeight="80dp"
+                android:onClick="onSubmitClick"
+                android:text="Submit"/>
+        </TableRow>
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
