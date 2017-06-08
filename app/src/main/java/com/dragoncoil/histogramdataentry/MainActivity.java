@@ -3,9 +3,8 @@ package com.dragoncoil.histogramdataentry;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -96,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
                 int idx = value.indexOf('.');
                 if (idx < 0) {
                     // Decimal point not in value yet.
+                    if (value.length() == 0) {
+                        // Prepend a zero if decimal point is first character.
+                        value = "0";
+                    }
                     value += label;
                 }
                 break;
@@ -109,7 +118,71 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSubmitClick(View v) {
         String value = display.getText().toString();
-        Log.i(TAG, "Submit " + value + " to host, " + host);
-        display.setText("");
+
+        if (!value.equals("") && !value.equals("0.") ) {
+            Log.v(TAG, "Submitting " + value);
+            toggleInterface(false);
+            String sending = "Submitting...";
+            display.setText(sending);
+            sendToHost(value);
+        }
+    }
+
+    private void sendToHost(String data) {
+        class SendToHostTask extends AsyncTask<String, Integer, Boolean> {
+            private final String TAG = SendToHostTask.class.getSimpleName();
+
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                try {
+                    URL url = new URL("http://" + host + "/data");
+                    Log.v(TAG, url.toString());
+                    HttpURLConnection c = (HttpURLConnection) url.openConnection();
+                    c.setRequestMethod("POST");
+                    c.setDoOutput(true);
+                    DataOutputStream wr = new DataOutputStream(c.getOutputStream());
+                    wr.writeBytes("value=" + strings[0]);
+                    wr.flush();
+                    wr.close();
+
+                    int responseCode = c.getResponseCode();
+                    Log.v(TAG, "HTTP response code = " + responseCode);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean b) {
+                display.setText("");
+                toggleInterface(true);
+            }
+        }
+
+        new SendToHostTask().execute(data);
+    }
+
+    private void toggleInterface(boolean enabled) {
+        for (
+            int id : Arrays.asList(
+                R.id.zeroButton,
+                R.id.oneButton,
+                R.id.twoButton,
+                R.id.threeButton,
+                R.id.fourButton,
+                R.id.fiveButton,
+                R.id.sixButton,
+                R.id.sevenButton,
+                R.id.eightButton,
+                R.id.nineButton,
+                R.id.decimalButton,
+                R.id.backspaceButton,
+                R.id.submitButton
+            )
+        ) {
+            Button b = (Button) findViewById(id);
+            b.setEnabled(enabled);
+        }
     }
 }
